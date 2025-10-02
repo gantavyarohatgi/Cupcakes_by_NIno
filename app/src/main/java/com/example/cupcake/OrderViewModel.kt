@@ -24,13 +24,14 @@ import kotlinx.coroutines.flow.update
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Currency
 import java.util.Locale
 
 /** Price for a single cupcake */
-private const val PRICE_PER_CUPCAKE = 2.00
+private const val PRICE_PER_CUPCAKE = 35.00
 
 /** Additional cost for same day pickup of an order */
-private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
+private const val PRICE_FOR_SAME_DAY_PICKUP = 20.00
 
 /**
  * [OrderViewModel] holds information about a cupcake order in terms of quantity, flavor, and
@@ -98,7 +99,10 @@ class OrderViewModel : ViewModel() {
         if (pickupOptions()[0] == pickupDate) {
             calculatedPrice += PRICE_FOR_SAME_DAY_PICKUP
         }
-        val formattedPrice = NumberFormat.getCurrencyInstance().format(calculatedPrice)
+//        val formattedPrice = NumberFormat.getCurrencyInstance().format(calculatedPrice)
+        val currencyFormat = NumberFormat.getCurrencyInstance()
+        currencyFormat.currency = Currency.getInstance("INR")
+        val formattedPrice = currencyFormat.format(calculatedPrice)
         return formattedPrice
     }
 
